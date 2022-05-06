@@ -17,21 +17,21 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    * Return index of the left child of element at index i.
    */
   private int leftChildOf(int i){
-    return -1 /* TODO */;
+    return i+1;
   }
 
   /**
    * Return index of the right child of element at index i.
    */
   private int rightChildOf(int i){
-    return -1 /* TODO */;
+    return i+2;
   }
 
   /**
    * Return index of the parent of element at index i.
    */
   private int parentOf(int i){
-    return -1 /* TODO */;
+    return i-1;
   }
 
   /**
@@ -50,9 +50,9 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    * is the only element out of place.
    */
   private void pushUp(int i) {
-    while ( true  /* TODO continue as long as i is not the root index  */) {
+    while ( i != heap.get(1) /* TODO continue as long as i is not the root index  */) {
 
-      if ( false /* TODO stop if parent is smaller!*/)  /**/
+      if (  /* TODO stop if parent is smaller!*/)  /**/
         break;
 
       /* TODO Push element at i up!*/
