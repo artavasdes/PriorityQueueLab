@@ -50,9 +50,9 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    * is the only element out of place.
    */
   private void pushUp(int i) {
-    while ( i != heap.get(1) /* TODO continue as long as i is not the root index  */) {
+    while ( heapi != heap.get(1) /* TODO continue as long as i is not the root index  */) {
 
-      if (  /* TODO stop if parent is smaller!*/)  /**/
+      if (heap.get(i) > heap.get(i-1) /* TODO stop if parent is smaller!*/)  /**/
         break;
 
       /* TODO Push element at i up!*/
@@ -62,7 +62,8 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
 
   /** Adds a new element to the the queue. */
   public void enqueue(E o){
-    /* TODO Add new element to heap, maintaining both shape and heap properties*/
+    heap.add(o);
+    heap.pushUp(heap.indexOf(o));
   }
 
   /* Try BCAMinPQTest now! You should pass 0.1 to 0.6*/
