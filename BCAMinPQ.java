@@ -51,6 +51,7 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    */
   //Please check pushup method
   private void pushUp(int i) {
+    
     while ( i != 1 /* TODO continue as long as i is not the root index  */) {
 
       if (heap.get(i).compareTo(heap.get(parentOf(i))) > 0) /* TODO stop if parent is smaller!*/)  /**/
@@ -61,6 +62,7 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
       //i = heap.
     }
   }
+
 
   /** Adds a new element to the the queue. */
   public void enqueue(E o){
@@ -76,8 +78,7 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    * If no item, returns null
    */
   public E peek(){
-    /* TODO Return minimum element of heap*/
-    return null;
+    return heap.get(1);
   }
 
   /* Try BCAMinPQTest now! You should pass 1a*/
@@ -89,10 +90,10 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    * is the only element out of place.
    */
   private void pushDown(int i) {
-    while( true /* TODO continue as long as i has at least 1 child  */) {
+    while( heap.get(leftChildOf(i)) != null|| heap.get(rightChildOf(i)) != null  /* TODO continue as long as i has at least 1 child  */) {
       /* TODO pick the smaller child (there might only be one!) */
 
-      if ( false /* TODO stop if i is smaller than its children!*/)
+      if ( heap.get(i) < heap.get(leftChildOf(i)) /* TODO stop if i is smaller than its children!*/)
         break;
 
       /* TODO Push element at i down!*/
