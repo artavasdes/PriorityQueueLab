@@ -20,7 +20,7 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
     int left=i*2;
     if(left>=heap.size()-1)
       return -1;
-    return left;//+1;
+    return left;
   }
 
   /**
@@ -30,7 +30,7 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
     int right=(i*2)+1;
     if(right>=heap.size()-1)
       return -1;
-    return right;//+1;  
+    return right;  
   }
   /**
    * Return index of the parent of element at index i.
@@ -96,25 +96,25 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
   private void pushDown(int i) {
     while(leftChildOf(i)>-1||rightChildOf(i)>-1){
       /* TODO pick the smaller child (there might only be one!) */
-      int index;
-    
-      if(leftChildOf(i)==-1){
-        index=rightChildOf(i);
+      int index; 
+
+      if (rightChildOf(i) == -1){
+        index = leftChildOf(i);
       }
-      else if(rightChildOf(i)==-1){
-        index=leftChildOf(i);
+      else if (heap.get(rightChildOf(i)).compareTo(heap.get(leftChildOf(i))) < 0) {
+        index = rightChildOf(i);
       }
-      else if (heap.get(rightChildOf(i)).compareTo(heap.get(leftChildOf(i))) > 0) {
-        index=leftChildOf(i);
+      else {
+        index = leftChildOf(i);
       }
-      else{
-        index=rightChildOf(i);
-      }
-      if (heap.get(i).compareTo(heap.get(index))<0){ /* TODO stop if i is smaller than its children!*/
+      /* pick the smaller child (there might only be one!) */
+
+      if ( heap.get(i).compareTo(heap.get(index)) < 0) /* stop if i is smaller than its children!*/
         break;
-      }
-      swap(i,index);
-      i=index;
+    
+      /* Push element at i down!*/
+      swap(i, index);
+      i = index;
     }
   }
 
@@ -128,12 +128,13 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
 
     if (isEmpty())
       throw new NoSuchElementException("MinPQ is empty");
-    
-    E ret;
-    swap(1,heap.size()-1); 
-    ret=heap.remove(size()-1);
-    pushDown(1);
-    return ret;
+
+    E ret = heap.get(1);
+
+   swap(1, heap.size() - 1);
+   pushDown(1);
+   heap.remove(heap.size() - 1); 
+   return ret;
     /* TODO Remove minimum element in heap, maintaining both shape and heap properties*/
     /* HINT: Swap minimum element and last element FIRST! */
   }
