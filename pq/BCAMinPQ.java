@@ -17,16 +17,21 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    * Return index of the left child of element at index i.
    */
   private int leftChildOf(int i){
-    return (i*2)+1;
+    int left=i*2;
+    if(left>=heap.size()-1)
+      return -1;
+    return left;//+1;
   }
 
   /**
    * Return index of the right child of element at index i.
    */
   private int rightChildOf(int i){
-    return (i*2)+2;
+    int right=(i*2)+1;
+    if(right>=heap.size()-1)
+      return -1;
+    return right;//+1;  
   }
-
   /**
    * Return index of the parent of element at index i.
    */
@@ -89,27 +94,27 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
    * is the only element out of place.
    */
   private void pushDown(int i) {
-    while(true){
+    while(leftChildOf(i)>-1||rightChildOf(i)>-1){
       /* TODO pick the smaller child (there might only be one!) */
       int index;
-      if(i>=heap.size()){
-        break;
+    
+      if(leftChildOf(i)==-1){
+        index=rightChildOf(i);
       }
-      if (heap.get(i).compareTo(heap.get(leftChildOf(i)))<0||heap.get(i).compareTo(heap.get(rightChildOf(i)))<0){ /* TODO stop if i is smaller than its children!*/
-        break;
+      else if(rightChildOf(i)==-1){
+        index=leftChildOf(i);
       }
-      if(heap.get(leftChildOf(i))==null){
-        swap(i,rightChildOf(i));
-      }
-      else if(heap.get(rightChildOf(i))==null){
-        swap(i,leftChildOf(i));
-      }
-      else if(heap.get(rightChildOf(i)).compareTo(heap.get(leftChildOf(i)))>0){
-        swap(i,leftChildOf(i));
+      else if (heap.get(rightChildOf(i)).compareTo(heap.get(leftChildOf(i))) > 0) {
+        index=leftChildOf(i);
       }
       else{
-        swap(i,rightChildOf(i));
+        index=rightChildOf(i);
       }
+      if (heap.get(i).compareTo(heap.get(index))<0){ /* TODO stop if i is smaller than its children!*/
+        break;
+      }
+      swap(i,index);
+      i=index;
     }
   }
 
@@ -123,9 +128,10 @@ public class BCAMinPQ<E extends Comparable<E>> implements BCAQueue<E> {
 
     if (isEmpty())
       throw new NoSuchElementException("MinPQ is empty");
-
-    swap(1,heap.size()-1);
-    E ret=heap.remove(heap.size()-1);
+    
+    E ret;
+    swap(1,heap.size()-1); 
+    ret=heap.remove(size()-1);
     pushDown(1);
     return ret;
     /* TODO Remove minimum element in heap, maintaining both shape and heap properties*/
